@@ -1,8 +1,10 @@
 import pygame
 from sys import exit
 from random import randint, choice
+import pygame.mixer
 
 highscore=0
+
 
 class Player(pygame.sprite.Sprite):
 	def __init__(self):
@@ -21,6 +23,7 @@ class Player(pygame.sprite.Sprite):
 		keys = pygame.key.get_pressed()
 		if keys[pygame.K_SPACE] and self.rect.bottom >= 300:
 			self.gravity = -20
+			jump_sound.play()
 
 	def apply_gravity(self):
 		self.gravity += 1
@@ -102,6 +105,11 @@ def collision_sprite():
 
 
 pygame.init()
+pygame.mixer.init()
+pygame.mixer.music.load('running.mp3')
+jump_sound = pygame.mixer.Sound('jump_sound.mp3')
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1)
 screen = pygame.display.set_mode((800,400))
 pygame.display.set_caption('Runner')
 clock = pygame.time.Clock()
